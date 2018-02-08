@@ -1,10 +1,7 @@
 using System;
 using System.Threading.Tasks;
-using System.Web.ModelBinding;
 using Microsoft.Bot.Connector;
 using Microsoft.Bot.Builder.Dialogs;
-using Microsoft.Bot.Builder.Dialogs.Internals;
-
 
 namespace Microsoft.Bot.Sample.SimpleEchoBot
 {
@@ -42,8 +39,8 @@ namespace Microsoft.Bot.Sample.SimpleEchoBot
 
             if (message.Text.Contains("report"))
             {
-                PromptDialog.Confirm(context, AfterReportAsync, "Please Select A Report To Run", null, 3, PromptStyle.Auto,
-                    new string[] { "Sales", "Marketing", "Dev" }, null);
+                PromptDialog.Choice(context, AfterReportAsync, new string[] { "Sales", "Marketing", "Dev" }, 
+                    "Please Select A Report To Run",null, 3, PromptStyle.Auto, null);
                 return;
             }
 
@@ -80,17 +77,22 @@ namespace Microsoft.Bot.Sample.SimpleEchoBot
             context.Wait(MessageReceivedAsync);
         }
 
-        public async Task AfterReportAsync(IDialogContext context, IAwaitable<bool> argument)
+        public async Task AfterReportAsync(IDialogContext context, IAwaitable<string> result)
         {
-            var confirm = await argument;
-            if (confirm)
+            var confirm = await result;
+            if (confirm == "Sales")
             {            
-                await context.PostAsync("Running report....");
+                await context.PostAsync("Running sales report....");
             }
-            else
+            if (confirm == "Marketing")
             {
-                await context.PostAsync("Running report....?");
+                await context.PostAsync("Running Marketing report....");
             }
+            if (confirm == "Dev")
+            {
+                await context.PostAsync("Running dev report....");
+            }
+
             context.Wait(MessageReceivedAsync);
         }
 
