@@ -40,9 +40,10 @@ namespace Microsoft.Bot.Sample.SimpleEchoBot
 
             }
 
-            if (message.Text == "bye")
+            if (message.Text.Contains("report"))
             {
-                
+                PromptDialog.Confirm(context, AfterReportAsync, "Please Select A Report To Run", null, 3, PromptStyle.Auto,
+                    new string[] { "Sales", "Marketing", "Dev" }, null);
                 return;
             }
 
@@ -75,6 +76,20 @@ namespace Microsoft.Bot.Sample.SimpleEchoBot
             else
             {
                 await context.PostAsync("Did not reset count.");
+            }
+            context.Wait(MessageReceivedAsync);
+        }
+
+        public async Task AfterReportAsync(IDialogContext context, IAwaitable<bool> argument)
+        {
+            var confirm = await argument;
+            if (confirm)
+            {            
+                await context.PostAsync("Running report....");
+            }
+            else
+            {
+                await context.PostAsync("Running report....?");
             }
             context.Wait(MessageReceivedAsync);
         }
