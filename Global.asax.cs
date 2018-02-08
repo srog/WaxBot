@@ -7,7 +7,7 @@ using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Dialogs.Internals;
 using Microsoft.Bot.Connector;
 
-namespace WaxBot
+namespace SimpleEchoBot
 {
     public class WebApiApplication : System.Web.HttpApplication
     {

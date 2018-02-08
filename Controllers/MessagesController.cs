@@ -10,7 +10,7 @@ using System.Net.Http;
 using Autofac;
 using Microsoft.Bot.Builder.Dialogs.Internals;
 
-namespace Microsoft.Bot.Sample.WaxBot
+namespace Microsoft.Bot.Sample.SimpleEchoBot
 {
     [BotAuthentication]
     public class MessagesController : ApiController
